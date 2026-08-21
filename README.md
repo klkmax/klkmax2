@@ -57,6 +57,26 @@ Coloca tu logo en `assets/images/logo_km.png` y ejecuta:
 flutter pub run flutter_launcher_icons
 ```
 
+## Firma de release (Keystore)
+
+Para firmar el APK de forma correcta (necesario para Play Store):
+
+1. Genera el keystore:
+```bash
+keytool -genkey -v -keystore android/klkmax-release-key.jks -keyalg RSA -keysize 2048 -validity 10000 -alias klkmax
+```
+
+2. Crea el archivo de configuración:
+```bash
+cp android/key.properties.example android/key.properties
+```
+
+3. Edita `android/key.properties` con tus contraseñas.
+
+Instrucciones detalladas → [docs/KEYSTORE.md](docs/KEYSTORE.md)
+
+> **Importante:** Nunca subas el archivo `.jks` ni `key.properties` a GitHub.
+
 ## Estructura principal
 
 ```
