@@ -39,7 +39,6 @@ class AppTheme {
         secondary: neonCyan,
         tertiary: electricMagenta,
         surface: cardBg,
-        background: darkBg,
         onPrimary: Colors.black,
         onSecondary: Colors.black,
         onSurface: Colors.white,
@@ -75,7 +74,7 @@ class AppTheme {
         backgroundColor: neonCyan,
         foregroundColor: Colors.black,
       ),
-      cardTheme: CardTheme(
+      cardTheme: CardThemeData(
         color: cardBg,
         elevation: 6,
         shape: RoundedRectangleBorder(
