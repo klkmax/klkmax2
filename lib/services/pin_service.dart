@@ -1,35 +1,34 @@
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:crypto/crypto.dart';
 import 'dart:convert';
 
 class PinService {
-  static const _storage = FlutterSecureStorage(
-    aOptions: AndroidOptions(encryptedSharedPreferences: true),
-  );
-
   static const _pinKey = 'klkmax_pin_hash';
   static const _pinSetKey = 'klkmax_pin_set';
 
   static Future<void> setPin(String pin) async {
+    final prefs = await SharedPreferences.getInstance();
     final hash = _hash(pin);
-    await _storage.write(key: _pinKey, value: hash);
-    await _storage.write(key: _pinSetKey, value: 'true');
+    await prefs.setString(_pinKey, hash);
+    await prefs.setBool(_pinSetKey, true);
   }
 
   static Future<bool> verifyPin(String pin) async {
-    final storedHash = await _storage.read(key: _pinKey);
+    final prefs = await SharedPreferences.getInstance();
+    final storedHash = prefs.getString(_pinKey);
     if (storedHash == null) return false;
     return storedHash == _hash(pin);
   }
 
   static Future<bool> hasPin() async {
-    final value = await _storage.read(key: _pinSetKey);
-    return value == 'true';
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_pinSetKey) ?? false;
   }
 
   static Future<void> clearPin() async {
-    await _storage.delete(key: _pinKey);
-    await _storage.delete(key: _pinSetKey);
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_pinKey);
+    await prefs.remove(_pinSetKey);
   }
 
   static String _hash(String pin) {
