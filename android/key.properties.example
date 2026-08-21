@@ -1,0 +1,4 @@
+storePassword=tu_password_del_keystore
+keyPassword=tu_password_de_la_clave
+keyAlias=klkmax
+storeFile=../klkmax-release-key.jks
